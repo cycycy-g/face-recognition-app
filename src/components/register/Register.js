@@ -95,6 +95,7 @@ class Register extends Component {
                             type="submit" 
                             value="Register" 
                             onClick={this.onSubmitSignIn}
+                            onKeyPress={this.handleKeyPress}
                             />
                     </div>
                     </div>
