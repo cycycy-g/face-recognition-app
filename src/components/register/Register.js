@@ -22,6 +22,12 @@ class Register extends Component {
         this.setState({password: event.target.value});
     }
 
+    handleKeyPress = (event) => {
+        if(event.key === 'Enter'){
+          this.onSubmitSignIn();
+        }
+      }
+
     onSubmitSignIn = () => {
         fetch('https://polar-gorge-81355.herokuapp.com/register', {
             method: 'post',
@@ -57,6 +63,7 @@ class Register extends Component {
                             name="name"  
                             id="name" 
                             onChange={this.onNameChange}
+                            onKeyPress={this.handleKeyPress}
                             />
                         </div>
                         <div className="mt3">
@@ -67,6 +74,7 @@ class Register extends Component {
                             name="email-address"  
                             id="email-address" 
                             onChange={this.onEmailChange}
+                            onKeyPress={this.handleKeyPress}
                             />
                         </div>
                         <div className="mv3">
@@ -77,6 +85,7 @@ class Register extends Component {
                             name="password"  
                             id="password" 
                             onChange={this.onPasswordChange}
+                            onKeyPress={this.handleKeyPress}
                             />
                         </div>
                         </fieldset>

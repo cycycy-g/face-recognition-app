@@ -16,6 +16,12 @@ class Signin extends Component {
         this.setState({signInPassword: event.target.value});
     }
 
+    handleKeyPress = (event) => {
+        if(event.key === 'Enter'){
+          this.onSubmitSignIn();
+        }
+      }
+
     onSubmitSignIn = () => {
         fetch('https://polar-gorge-81355.herokuapp.com/signin', {
             method: 'post',
@@ -47,6 +53,7 @@ class Signin extends Component {
                             <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
                             <input 
                             onChange={this.onEmailChange}
+                            onKeyPress={this.handleKeyPress}
                             className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                             type="email" 
                             name="email-address"  
@@ -57,6 +64,7 @@ class Signin extends Component {
                             <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
                             <input 
                             onChange={this.onPasswordChange}
+                            onKeyPress={this.handleKeyPress}
                             className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                             type="password" 
                             name="password"  
