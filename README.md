@@ -1,5 +1,4 @@
 # Smart Brain App
-Project for Udemy course
 
 Clone this repo
 Run npm install
