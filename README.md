@@ -1,6 +1,7 @@
 # Smart Brain App
 Project for Udemy course
 
-1.) Clone this repo.
-2.) run in the command line ** npm install **
-3.) run in the command line ** npm start **
+Clone this repo
+Run npm install
+Run npm start
+You must add your own API key in the src/App.js file to connect to Clarifai.
