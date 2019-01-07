@@ -106,7 +106,8 @@ class Signin extends Component {
                     </main>
                     
                 </div>
-                <p style={{fontSize: '1.2rem'}}>For testing purposes, please use test@gmail.com and test as email and password respectively.</p>
+                <p style={{fontSize: '1.2rem'}}>For testing purposes, please use test@gmail.com and test as 
+                email and password respectively or you can also Register</p>
             </div>
         );
     }
