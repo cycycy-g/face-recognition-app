@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
+import LoadingSpinner from '../loadingspinner/loadingspinner';
+import ErrorMsg from '../errormessage/errormessage';
 
 class Signin extends Component {
     constructor(props) {
         super(props);
         this.state = {
             signInEmail: '',
-            signInPassword: ''
+            signInPassword: '',
+            isLoading: false,
+            displayError: false
         }
     }
     onEmailChange = (event) => {
@@ -23,7 +27,8 @@ class Signin extends Component {
       }
 
     onSubmitSignIn = () => {
-        fetch('https://polar-gorge-81355.herokuapp.com/signin', {
+        this.setState({ isLoading: true }, () => {
+            fetch('https://polar-gorge-81355.herokuapp.com/signin', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -36,8 +41,14 @@ class Signin extends Component {
             if ( data.id ) {
                 this.props.loadUser(data);
                 this.props.onRouteChange('home');
+            } else {
+                this.setState({ isLoading: false, displayError: true });
             }
         })
+        .catch(err => {
+            this.setState({ isLoading: false, displayError: true });
+        });
+    })
         
     }
 
@@ -73,16 +84,23 @@ class Signin extends Component {
                         </div>
                         </fieldset>
                     <div className="">
-                        <input 
+                        {
+                            this.state.isLoading 
+                            ? <LoadingSpinner /> 
+                            : <input 
                             className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
                             type="submit" 
                             value="Sign in" 
                             onClick={this.onSubmitSignIn}
-                            />
+                            /> 
+                        }        
                     </div>
                     <div className="lh-copy mt3">
                         <p onClick={() => onRouteChange('register')} className="f6 link dim black db pointer">Register</p>
                     </div>
+                    {
+                        this.state.displayError ? <ErrorMsg /> : false
+                    }                    
                     </div>
                 </main>
             </article>

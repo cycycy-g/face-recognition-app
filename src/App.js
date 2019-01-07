@@ -77,7 +77,8 @@ class App extends Component {
   onSubmit = () => {
     this.setState({imageUrl: this.state.input});
     if(this.state.input){
-      fetch('https://polar-gorge-81355.herokuapp.com/imgurl', {
+      // this.setState({isLoading: true}, () => {
+        fetch('https://polar-gorge-81355.herokuapp.com/imgurl', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -102,8 +103,9 @@ class App extends Component {
         }
       this.displayFaceBox(this.calculateFaceLocation(response))
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
       }
+      // });
   }
 
   onRouteChange = (route) => {
@@ -116,7 +118,7 @@ class App extends Component {
   }
   
   render() {
-    const { route, isSignedIn, box, imageUrl, } = this.state;
+    const { route, isSignedIn, box, imageUrl } = this.state;
     return (
       <div className="App">
         <Particles className='particles'
