@@ -5,6 +5,7 @@ import Register from './components/register/Register';
 import Logo from './components/logo/Logo';
 import ImageLinkForm from './components/imagelinkform/ImageLinkForm';
 import FaceR from './components/facer/FaceR';
+import ErrorImgMessage from './components/errormessage/errorimgmessage';
 import Rank from './components/rank/Rank';
 import Particles from 'react-particles-js';
 import './App.css';
@@ -26,6 +27,7 @@ const initialState = {
   imageUrl: '',
   box: {},
   route: 'signin',
+  displayError: false,
   isSignedIn: false,
   user : {
     id: '',
@@ -66,7 +68,6 @@ class App extends Component {
   }
 
   displayFaceBox = (box) => {
-    console.log(box);
     this.setState({ box: box });
   }
 
@@ -99,13 +100,20 @@ class App extends Component {
           .then(count => {
             this.setState(Object.assign(this.state.user, {entries: count}))
           })
-          .catch(console.log);
+          .catch(err => {
+            this.setState({displayError: true});
+            console.log(err);
+          });
+        } else {
+          this.setState({displayError: true});
         }
-      this.displayFaceBox(this.calculateFaceLocation(response))
+      this.displayFaceBox(this.calculateFaceLocation(response));
+      this.setState({displayError: false});
       })
       .catch(err => console.log(err))
+      } else {
+        this.setState({displayError: true});
       }
-      // });
   }
 
   onRouteChange = (route) => {
@@ -118,7 +126,7 @@ class App extends Component {
   }
   
   render() {
-    const { route, isSignedIn, box, imageUrl } = this.state;
+    const { route, isSignedIn, box, imageUrl, displayError } = this.state;
     return (
       <div className="App">
         <Particles className='particles'
@@ -134,6 +142,10 @@ class App extends Component {
               onSubmit={this.onSubmit}
               />
               <FaceR box={box} imageUrl={imageUrl}/>
+              { displayError 
+              ? <ErrorImgMessage />
+              : false
+              }
             </div>
             : (
               route === 'signin' || route === 'signout'
