@@ -6,6 +6,7 @@ project for Udemy course
 * CSS3 
 * Javascript 
 * React
+* Heroku
 
 ## Run this project locally
 1. Clone this repo
