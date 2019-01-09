@@ -84,31 +84,33 @@ class Signin extends Component {
                                 />
                             </div>
                             </fieldset>
-                        <div className="">
                             {
                                 this.state.isLoading 
-                                ? <LoadingSpinner /> 
-                                : <input 
-                                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
-                                type="submit" 
-                                value="Sign in" 
-                                onClick={this.onSubmitSignIn}
-                                /> 
-                            }        
-                        </div>
-                        <div className="lh-copy mt3">
-                            <p onClick={() => onRouteChange('register')} className="f6 link dim black db pointer">Register</p>
-                        </div>
-                        {
-                            this.state.displayError ? <ErrorMsg /> : false
-                        }                    
-                        </div>
-                    </main>
-                    
+                                    ? <LoadingSpinner />
+                                    : <div>
+                                        <div className="">
+                                            <input 
+                                            className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
+                                            type="submit" 
+                                            value="Sign in" 
+                                            onClick={this.onSubmitSignIn}
+                                            />          
+                                        </div>
+                                        <div className="lh-copy mt3">
+                                            <p onClick={() => onRouteChange('register')} className="f6 link dim black db pointer">Register</p>
+                                        </div>
+                                    </div>
+                            }
+                            {
+                                this.state.displayError ? <ErrorMsg /> : false
+                            }                    
+                            </div>
+                        </main>
+                        
+                    </div>
+                    <p style={{fontSize: '1.2rem'}}>For testing purposes, please use test@gmail.com and test as 
+                    email and password respectively or you can also Register</p>
                 </div>
-                <p style={{fontSize: '1.2rem'}}>For testing purposes, please use test@gmail.com and test as 
-                email and password respectively or you can also Register</p>
-            </div>
         );
     }
 }

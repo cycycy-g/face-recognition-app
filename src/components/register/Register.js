@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import LoadingSpinner from '../loadingspinner/loadingspinner';
+import ErrorRegisterMessage from '../errormessage/errorRegisterMessage';
 
 class Register extends Component {
     constructor(props) {
@@ -6,7 +8,10 @@ class Register extends Component {
         this.state = {
             email: '',
             password: '',
-            name: ''
+            name: '',
+            isLoading: false,
+            displayError: false,
+            invalidEmail: false
         }
     }
 
@@ -29,23 +34,31 @@ class Register extends Component {
       }
 
     onSubmitSignIn = () => {
-        fetch('https://polar-gorge-81355.herokuapp.com/register', {
+        this.setState({ isLoading: true }, () => {
+            fetch('https://polar-gorge-81355.herokuapp.com/register', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 email: this.state.email,
                 password: this.state.password,
                 name: this.state.name
+                })
             })
-        })
-        .then(response => response.json())
-        .then(user => {
-            if (user.id) {
-                this.props.loadUser(user);
-                this.props.onRouteChange('home');
-            }
-        })
-        
+            .then(response => response.json())
+            .then(user => {
+                if (user.id) {
+                    this.props.loadUser(user);
+                    this.props.onRouteChange('home');
+                } else {
+                    if(user === 'incorrect form submission'){
+                        this.setState({ displayError: true, invalidEmail:false });
+                    } else {
+                        this.setState({ invalidEmail: true, displayError: false });
+                    }
+                    this.setState({ isLoading: false });   
+                }
+            });
+        });
     }
 
     render () {
@@ -89,14 +102,30 @@ class Register extends Component {
                             />
                         </div>
                         </fieldset>
-                    <div className="">
-                        <input 
-                            className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
-                            type="submit" 
-                            value="Register" 
-                            onClick={this.onSubmitSignIn}
-                            onKeyPress={this.handleKeyPress}
-                            />
+                    <div className="">    
+                        {
+                            this.state.isLoading 
+                            ? <LoadingSpinner />                   
+                            : <input 
+                                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
+                                type="submit" 
+                                value="Register" 
+                                onClick={this.onSubmitSignIn}
+                                onKeyPress={this.handleKeyPress}
+                                />
+                        }
+                        {
+                            this.state.displayError 
+                            ? <ErrorRegisterMessage />
+                            : false
+                        } 
+                        {
+                            this.state.invalidEmail
+                            ? <div style={{fontSize: '1rem', color: 'red'}}>
+                                <p>Unable to register</p>
+                              </div> 
+                            : false
+                        } 
                     </div>
                     </div>
                 </main>
