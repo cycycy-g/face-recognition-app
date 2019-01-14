@@ -6,6 +6,8 @@ project for Udemy course
 * CSS3 
 * Javascript 
 * React
+* NodeJS
+* ExpressJS
 * Heroku
 
 ## Run this project locally
