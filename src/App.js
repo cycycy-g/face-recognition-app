@@ -98,11 +98,11 @@ class App extends Component {
           })
           .then(response => response.json())
           .then(count => {
+            this.setState({displayError: false});
             this.setState(Object.assign(this.state.user, {entries: count}))
           })
           .catch(err => {
             this.setState({displayError: true});
-            console.log(err);
           });
         } else {
           this.setState({displayError: true});
@@ -110,7 +110,7 @@ class App extends Component {
       this.displayFaceBox(this.calculateFaceLocation(response));
       this.setState({displayError: false});
       })
-      .catch(err => console.log(err))
+      .catch(err => this.setState({displayError: true}))
       } else {
         this.setState({displayError: true});
       }
@@ -141,10 +141,10 @@ class App extends Component {
               onInputChange={this.onInputChange} 
               onSubmit={this.onSubmit}
               />
-              <FaceR box={box} imageUrl={imageUrl}/>
+              
               { displayError 
               ? <ErrorImgMessage />
-              : false
+              : <FaceR box={box} imageUrl={imageUrl}/>
               }
             </div>
             : (
