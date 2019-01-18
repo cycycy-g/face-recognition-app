@@ -78,7 +78,6 @@ class App extends Component {
   onSubmit = () => {
     this.setState({imageUrl: this.state.input});
     if(this.state.input){
-      // this.setState({isLoading: true}, () => {
         fetch('https://polar-gorge-81355.herokuapp.com/imgurl', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
@@ -89,7 +88,7 @@ class App extends Component {
       .then(response => response.json())
       .then(response => {
         if(response.status) {
-          fetch('https://polar-gorge-81355.herokuapp.com/img', {
+          fetch('https://polar-gorge-81355.herokuapp.com/img', { //'https://polar-gorge-81355.herokuapp.com/img'
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -107,8 +106,8 @@ class App extends Component {
         } else {
           this.setState({displayError: true});
         }
-      this.displayFaceBox(this.calculateFaceLocation(response));
       this.setState({displayError: false});
+      this.displayFaceBox(this.calculateFaceLocation(response));
       })
       .catch(err => this.setState({displayError: true}))
       } else {
@@ -141,10 +140,10 @@ class App extends Component {
               onInputChange={this.onInputChange} 
               onSubmit={this.onSubmit}
               />
-              
+                <FaceR box={box} imageUrl={imageUrl}/>
               { displayError 
               ? <ErrorImgMessage />
-              : <FaceR box={box} imageUrl={imageUrl}/>
+              : null
               }
             </div>
             : (
