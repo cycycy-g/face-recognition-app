@@ -1,5 +1,5 @@
-# Smart Brain App
-project for Udemy course
+# Face Recognition App
+App to detect face and stores number of entries in Postrgres database
 
 ## Tools and Technologies used
 * HTML5 
